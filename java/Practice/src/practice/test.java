@@ -29,6 +29,6 @@ public class test {
         sumRootToLeafNumbers sum = new sumRootToLeafNumbers();
         
         int total = sum.sumNumbers(root);
-        System.out.println();
+        System.out.println(total);
     }
 }

@@ -16,6 +16,7 @@ import java.util.*;
 public class palindrome {
 
     public static boolean isPalindrom(String s) {
+        s = s.replaceAll("[^0-9a-zA-Z]", "").toLowerCase();
         int len = s.length();
         int i = 0;
      

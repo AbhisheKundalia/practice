@@ -27,12 +27,16 @@ public class sumRootToLeafNumbers {
             if(top.left != null){
              top.left.val = value*10+top.left.val;
              tmp.push(top.left);
-            }else if(top.right != null){
+            }
+            
+            if(top.right != null){
              top.right.val = value*10+top.right.val;
              tmp.push(top.right);
-            }else{
-                total += value;
-            }    
+            }
+            
+            if(top.right == null && top.left == null){
+                total += value;  
+            }
           }
          
         }
