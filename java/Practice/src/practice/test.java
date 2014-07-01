@@ -20,7 +20,11 @@ public class test {
         System.out.println(result.toString());*/
          String number_re = "\\s*[+-]?\\d*(\\.\\d+)?(e\\d+)?\\s*";
         // String s = "1";
+         int n = 3;
+         NQueens queen = new NQueens();
+        int total = queen.totalNQueens(n);
          
+         System.out.println(total);
          double t = Double.MAX_VALUE;
          double s = Double.MIN_VALUE;
          System.out.println(t);
