@@ -31,16 +31,23 @@ public class longestValidParenthesis {
                      index.pop();
                      temp.pop();
                      continue;
-            }
+              }
             }
             
             index.push(i);
-            temp.push(s.charAt(i));
-            
+            temp.push(s.charAt(i));          
         }
         
+        int end = s.length();
         
+        while(!index.isEmpty()){
+            int index0 = index.pop();
+            maxLen = maxLen > (end - index0 - 1)?maxLen : end - index0 - 1;
+            end = index0;
+        }
         
+        maxLen = maxLen > end - startIndex? maxLen : end - startIndex;
+             
         return maxLen;
     }
 }
