@@ -18,19 +18,14 @@ public class test {
         /*palindrome pa = new palindrome();
         List<List<String>> result = palindrome.partition("cbb");
         System.out.println(result.toString());*/
-         String number_re = "\\s*[+-]?\\d*(\\.\\d+)?(e\\d+)?\\s*";
+         String S = "fooowingmonkeypoundcake";
+         String[] L = {"fooo","barr","wing","ding","wing"};
         // String s = "1";
          int n = 3;
-         NQueens queen = new NQueens();
-        int total = queen.totalNQueens(n);
          
-         System.out.println(total);
-         double t = Double.MAX_VALUE;
-         double s = Double.MIN_VALUE;
-         System.out.println(t);
-         System.out.println(s);
-         System.out.println(t);
-         System.out.println(s*t);
+         findSubString fs = new findSubString();
+         List<Integer> re = fs.findSubstring(S, L);
+         System.out.println(re.toString());
         // System.out.println(s.matches("\\s*[+-]?\\d+.*"));
        
        /* TreeNode root = new TreeNode(0);

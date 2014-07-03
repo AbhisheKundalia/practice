@@ -13,25 +13,14 @@ import java.util.*;
 public class longestValidParenthesis {
     public int longestValidParentheses(String s) {
         int maxLen = 0;
-        int startIndex = 0;
         Stack<Integer> index = new Stack<Integer>();
         Stack<Character> temp = new Stack<Character>();
         
         for(int i = 0; i < s.length(); i++){
-            if(index.isEmpty() && s.charAt(i) == ')'){
-                maxLen = maxLen > i - startIndex? maxLen : i - startIndex;
-                startIndex = i+1;
-            }else if(!index.isEmpty()){
-                
-            char top = temp.peek();
-            if(top == ')'){
+            if(s.charAt(i) == ')' && !temp.isEmpty() && temp.peek() == '('){
                 index.pop();
                 temp.pop();
-            }else if(s.charAt(i) == ')'){        
-                     index.pop();
-                     temp.pop();
-                     continue;
-              }
+                continue;
             }
             
             index.push(i);
@@ -46,7 +35,7 @@ public class longestValidParenthesis {
             end = index0;
         }
         
-        maxLen = maxLen > end - startIndex? maxLen : end - startIndex;
+        maxLen = maxLen > end? maxLen : end;
              
         return maxLen;
     }
