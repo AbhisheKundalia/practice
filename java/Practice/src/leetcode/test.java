@@ -20,11 +20,13 @@ public class test {
         
          String S = "fooowingmonkeypoundcake";
          String[] L = {"fooo","barr","wing","ding","wing"};
-        
-         int n = 3;
+         String s1 = "aabc";
+         String s2 = "abad";
+         String s3 = "aabadabc";
          
-         stringMultiply sm = new stringMultiply();
-         String add = sm.multiply("123", "456");
-         System.out.println(add);
+         restoreIP restore = new restoreIP();
+         
+         
+         System.out.println(restore.restoreIpAddresses("010010"));
     }
 }
