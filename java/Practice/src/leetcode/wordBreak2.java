@@ -43,4 +43,31 @@ public class wordBreak2 {
        
        return combPattens.get(len - 1);
     }
+      public List<String> wordBreak2(String s, Set<String> dict) {
+             List<String> res = new ArrayList<String> ();
+             
+             for(int i = 0; i < s.length(); i++){
+                 String word = s.substring(0,i+1);
+                 
+                 if(dict.contains(word)){
+                     List<String> res0 = new ArrayList<String>();
+                     
+                     if(i+1 == s.length()) {
+                         res.add(word);
+                         break;
+                     }
+                      
+                     res0 = wordBreak2(s.substring(i+1), dict);
+                     
+                     for(int j = 0; j < res0.size(); j++){
+                         res.add(word + " " + res0.get(j));
+                     }
+                     
+                    
+                 }
+             }
+             
+             return res;
+      }
+     
 }
