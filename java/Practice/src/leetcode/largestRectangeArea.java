@@ -108,26 +108,59 @@ public class LargestRectangleArea {
       public int largestRectangleArea4(int[] height) {
         int maxArea = 0;   
         Stack<Integer> index = new Stack<Integer>();
+        Stack<Integer> heights = new Stack<Integer>();
+        
         index.push(0);
+        heights.push(0);
+        
         int i = 1;
+        int index0 = 1;
         
         while(i <= height.length){
-           int h = height[index.peek()-1];
+           int h = heights.peek();
            
            if(height[i-1] >= h){
-               index.push(i);
+               index.push(index0);
+               heights.push(height[i-1]);
                i++;
+               index0 = i;
            }else{
-              maxArea = Math.max(h*(i-index.pop()), maxArea);
+               index0 = index.pop();
+                h = heights.pop();
+                
+                maxArea = Math.max(h*(i-index0), maxArea);
+              
            }
          }
         
-        while(index.size() > 1){
-             maxArea = Math.max(height[index.peek()-1]*(height.length-index.pop()), maxArea);
+        while(!index.isEmpty()){
+             maxArea = Math.max(heights.pop()*(height.length + 1 -index.pop()), maxArea);
         }
         
         return maxArea;
         
     }
+      
+      public int largestRectangleArea5(int[] height) {  
+        
+       Stack<Integer> S = new Stack<Integer>();
+       int n = height.length;
+       
+       int[] h = new int[n +1 ];
+       h = Arrays.copyOf(height, n);
+       h[n] = 0;
+       
+       int sum = 0;  
+       for (int i = 0; i <= n; i++) {  
+            if (S.empty() || h[i] > h[S.peek()]) S.push(i);  
+            else {  
+                 int tmp = S.pop();   
+                 sum = Math.max(sum, h[tmp]*(S.empty()? i : i-S.peek()-1));                 
+                 i--;  
+            }         
+       }  
+       
+       return sum;  
+ }  
         
 }
