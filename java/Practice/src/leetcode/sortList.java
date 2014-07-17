@@ -7,8 +7,12 @@ package leetcode;
 /**
  *
  * @author admin
+ * 
+ * 
+ * 
  */
 public class sortList {
+    //bubble sort - complexity is n*n
     public ListNode sortList(ListNode head){
         
         if(head == null || head.next == null){
@@ -61,14 +65,5 @@ public class sortList {
         return head;
     }
     
-     public ListNode sortList(ListNode head){
-         ListNode tmp = head;
-         ListNode sortedList = new
-         while(tmp!=null){
-             
-             
-         }
-         return head;
-     }
     
 }

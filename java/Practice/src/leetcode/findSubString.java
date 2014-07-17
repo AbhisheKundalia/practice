@@ -12,38 +12,27 @@ import java.util.*;
  */
 public class findSubString {
     public List<Integer> findSubstring(String S, String[] L) {
-       List<Integer> res = new ArrayList<Integer>();
+        List<Integer> res = new ArrayList<Integer>();
        
        if(L.length < 1) return res;
        
-       List<String> strings = new ArrayList<String>();
-       
+       HashMap<String, Integer> indexes = new HashMap<String, Integer>();      
        int len = L[0].length();
-       int index = 0;
+       int beginindex = 0;
+       int t = 0;
        
-       while(index < S.length() - len){
-           String t = S.substring(index, index + len);
-           boolean find = false;
-           for(int i = 0; i < L.length; i++){
-               if(L[i].equalsIgnoreCase(t)){
-                   find = true;
-                   break;
-               }
+       for(int i = 0; i < L.length; i++){
+           int count = 1;
+           
+           if(indexes.containsKey(L[i])){
+              count += indexes.get(L[i]);
            }
            
-           if(find){
-               if(strings.isEmpty() || strings.contains(t)){
-                   res.add(index);
-                   strings.clear();
-                }
-               
-               index += len;
-               strings.add(t);
-               
-           }else{
-                strings.clear();
-                index++;
-           }
+           indexes.put(L[i], count);
+       }
+       
+       while(t < S.length() - len*L.length){
+            String 
        }
        
        return res;
