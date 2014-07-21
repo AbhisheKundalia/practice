@@ -18,15 +18,12 @@ public class test {
     public static void main(String[] args)  {
         // TODO code application logic here
         
-         String S = "fooowingmonkeypoundcake";
-         String[] L = {"fooo","barr","wing","ding","wing"};
-         String s1 = "aabc";
-         String s2 = "abad";
-         String s3 = "aabadabc";
+        int[] A = new int[] {1,1};
+        int[] B = new int[] {1,2};
+        
+         medianOfTwoArrays t = new medianOfTwoArrays();
+          double res = t.findMedianSortedArrays(A, B);
          
-         restoreIP restore = new restoreIP();
-         
-         
-         System.out.println(restore.restoreIpAddresses("010010"));
+         System.out.println(res);
     }
 }

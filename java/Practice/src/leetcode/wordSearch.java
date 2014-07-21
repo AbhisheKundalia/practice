@@ -7,6 +7,12 @@ package leetcode;
 /**
  *
  * @author admin
+ * 
+ * 
+ * 用递归。
+ * 最开始一直没有通过，是因为每次回溯的时候，我都会开辟一个新的二位 VISITED的数组。这样很浪费内存
+ * 
+ * 
  */
 public class wordSearch {
     public boolean exist(char[][] board, String word) {
@@ -17,10 +23,11 @@ public class wordSearch {
         
         int col = board[0].length;
         
+        boolean[][] visited = new boolean[row][col];
         for(int i = 0; i < row; i++){
             for(int j = 0; j < col; j++){
-                boolean[][] visited = new boolean[row][col];
-                if(board[i][j] == word.charAt(0) && search(board, i, j, visited, word, 0)){
+                
+                if(search(board, i, j, visited, word, 0)){
                    return true;
                 }
             }
@@ -31,32 +38,30 @@ public class wordSearch {
     
     public boolean search(char[][] board, int x, int y, boolean[][] visited, String word, int pos){    
 
-        if(board[x][y] != word.charAt(pos)) return false;
+        if(board[x][y] != word.charAt(pos) || visited[x][y]) return false;
         
+        visited[x][y] = true;
         pos++;
         
         if(pos == word.length()) return true;
-         visited[x][y] = true;
-         
-        if(x-1>= 0 && !visited[x-1][y] && board[x-1][y] == word.charAt(pos)){         
-            boolean exist = search(board, x-1, y, visited, word, pos);
-            if(exist) return true;
+            
+        if(x-1>= 0 && search(board, x-1, y, visited, word, pos)){         
+            return true;
         }  
         
-        if(y-1>= 0 && !visited[x][y-1] && board[x][y-1] == word.charAt(pos)){         
-            boolean exist = search(board, x, y-1, visited, word, pos);
-            if(exist) return true;
+        if(y-1>= 0 && search(board, x, y-1, visited, word, pos)){         
+             return true;
         }  
         
-        if(x+1 < board.length && !visited[x+1][y] && board[x+1][y] == word.charAt(pos)){         
-            boolean exist = search(board, x+1, y, visited, word, pos);
-            if(exist) return true;
+        if(x+1 < board.length && search(board, x+1, y, visited, word, pos)){         
+            return true;
         }  
         
-        if(y+1 < board[0].length && !visited[x][y+1] && board[x][y+1] == word.charAt(pos)){         
-            boolean exist = search(board, x, y+1, visited, word, pos);
-            if(exist) return true;
+        if(y+1 < board[0].length && search(board, x, y+1, visited, word, pos)){         
+           return true;
         }
+        
+        visited[x][y] = false;
         
         return false;
     }
