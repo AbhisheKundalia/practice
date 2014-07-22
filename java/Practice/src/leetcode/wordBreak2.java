@@ -43,31 +43,90 @@ public class wordBreak2 {
        
        return combPattens.get(len - 1);
     }
-      public List<String> wordBreak2(String s, Set<String> dict) {
-             List<String> res = new ArrayList<String> ();
+     
+     //Here I used the BSF, then it listed all possibility
+      public List<String> wordBreak3(String s, Set<String> dict) {
+             HashMap<Integer,List<String>> tmp = new HashMap<Integer,List<String>> ();
+             Queue<Integer> indexes = new LinkedList<Integer>();
              
-             for(int i = 0; i < s.length(); i++){
-                 String word = s.substring(0,i+1);
-                 
-                 if(dict.contains(word)){
-                     List<String> res0 = new ArrayList<String>();
-                     
-                     if(i+1 == s.length()) {
-                         res.add(word);
-                         break;
-                     }
-                      
-                     res0 = wordBreak2(s.substring(i+1), dict);
-                     
-                     for(int j = 0; j < res0.size(); j++){
-                         res.add(word + " " + res0.get(j));
-                     }
-                     
-                    
+             List<String> res = new ArrayList<String>();           
+             int n = s.length();
+             
+             boolean[] possible = new boolean[n];
+             
+             for(int i = 0; i < n; i++){
+                 if(dict.contains(s.substring(0, i+1))){                                       
+                     List<String> tmp0 = new ArrayList<String>();
+                     tmp0.add(s.substring(0, i+1));
+                     tmp.put(i+1, tmp0);
+                     indexes.add(i+1);
                  }
              }
              
+             while(!indexes.isEmpty()){
+                
+                 int index = indexes.poll();
+                 List<String> tmp0 = new ArrayList<String>(tmp.get(index));
+                 tmp.remove(index);
+                 
+                 for(int j = index; j < n; j++){
+                     if(dict.contains(s.substring(index, j+1))){  
+                         List<String> newS = new ArrayList<String>();
+                         
+                         for(int t = 0; t < tmp0.size(); t++){
+                             newS.add(tmp0.get(t) + " " + s.substring(index, j+1));
+                         }
+                         
+                         if(j+1 == n){
+                             res.addAll(newS);
+                             continue;
+                         }
+                         
+                         if(tmp.containsKey(j+1)){
+                             List<String> value = new ArrayList<String>(tmp.get(j+1));
+                             value.addAll(newS);
+                             
+                             tmp.put(j+1, value);
+                         }else{
+                             
+                             indexes.add(j+1);
+                            
+                             tmp.put(j+1, tmp0);
+                         }      
+                    } 
+                }
+             }
+               
              return res;
+      }
+      
+      //if we use the DSF, and record we have visited    
+      public List<String> wordBreak2(String s, Set<String> dict) {
+         int n = s.length();
+         boolean[] possibility = new boolean[n+1]; 
+         List<String> res = new ArrayList<String>();
+         String result = "";
+         
+         wordBreakProb(s, dict, result, 0, n, possibility,res);
+         
+         return res;             
+     } 
+      
+      public void wordBreakProb(String s, Set<String> dict, String result, int start, int len,  boolean[] possibility, List<String> res){
+          if(start == len){
+              res.add(result.trim());
+              return;
+          }
+          
+          for(int i = start; i < len; i++){
+              if(dict.contains(s.substring(start, i+1)) && !possibility[i+1]){
+                  int size = res.size();
+                  wordBreakProb(s, dict, result+" "+s.substring(start, i+1),i+1,len, possibility, res);
+                  if(res.size() == size) possibility[i+1] = true;
+              }
+          }
+          
+          
       }
      
 }
