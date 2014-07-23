@@ -120,7 +120,7 @@ public class wordLadder {
             
             /*
              * we use the following code instead of the above transitString method, 
-             * here, the time cost is 32*word.length
+             * here, the time cost is 26*word.length
              * 
              * the above would be dict.size()*word.length
              * 
@@ -145,5 +145,78 @@ public class wordLadder {
         
         return 0;
         
+    }
+    
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+        Queue<String> words = new LinkedList<String>();
+        HashMap<String, List<List<String>>> res = new HashMap<String, List<List<String>>>();
+        Queue<String> next = new LinkedList<String>();
+        
+        words.add(start);
+        List<List<String>> tmp0 = new ArrayList<List<String>>();
+        List<String> word0 = new ArrayList<String>();
+        word0.add(start);
+        tmp0.add(word0);
+        res.put(start, tmp0);
+        dict.remove(start);
+        
+        while(!words.isEmpty()){
+            String currWord = words.poll();
+            List<List<String>> tmp = new ArrayList<List<String>>(res.get(currWord));
+            res.remove(currWord);
+            
+            if(currWord.equals(end)){
+                return tmp;
+            }
+            
+            /*
+             * we use the following code instead of the above transitString method, 
+             * here, the time cost is 26*word.length
+             * 
+             * the above would be dict.size()*word.length
+             * 
+             * For large dict set, the following would be better
+             */
+            
+            for(int i = 0; i < currWord.length(); i++){
+               char[] chars = currWord.toCharArray();
+               
+               for(char c = 'a'; c <= 'z'; c++){
+                   chars[i] = c;
+                   String newS = String.valueOf(chars); // we cann't use .toString() here 
+                   
+                   if(dict.contains(newS)){
+                                 
+                       List<List<String>> newtmp = new ArrayList<List<String>> ();
+                       for(int j = 0; j < tmp.size(); j++){
+                           List<String> newWordList = new ArrayList<String>(tmp.get(j));//notice the java is only pass by reference
+                           newWordList.add(newS);
+                           newtmp.add(newWordList);
+                       }
+                       
+                       if(res.containsKey(newS)){
+                           res.get(newS).addAll(newtmp);
+                       }else{
+                           next.add(newS);
+                           res.put(newS, newtmp);
+                       }
+                   }
+               }       
+               
+            }
+            
+            if(words.isEmpty()){
+                   while(!next.isEmpty()){
+                       String word = next.poll();
+                       words.add(word);
+                       dict.remove(word);
+                   }
+               }
+            
+        }
+        
+        tmp0.clear();
+        
+        return tmp0;
     }
 }

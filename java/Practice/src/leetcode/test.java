@@ -20,10 +20,20 @@ public class test {
         
         int[] A = new int[] {1,1};
         int[] B = new int[] {1,2};
-        
-         medianOfTwoArrays t = new medianOfTwoArrays();
-          double res = t.findMedianSortedArrays(A, B);
+          Set<String> set = new HashSet<String>();
+          
+         set.add("ted");
+         set.add("tex");
+         set.add("red");
+         set.add("tax");
+         set.add("tad");
+         set.add("den");
+         set.add("rex");
+         set.add("pee");
          
-         System.out.println(res);
+         wordLadder wd = new wordLadder();
+         wd.findLadders("red","tax",set);
+         
+         System.out.println();
     }
 }
