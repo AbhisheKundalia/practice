@@ -7,6 +7,12 @@ package leetcode;
 /**
  *
  * @author admin
+ * 
+ * if i -> i+1
+ * then gasLeft - cost[i] > 0
+ * then gasLeft - cost[i] + gas[i+1] > gas[i+1]
+ * 
+ * 
  */
 public class gasStation {
     public int canCompleteCircuit(int[] gas, int[] cost) {

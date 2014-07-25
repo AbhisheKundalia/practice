@@ -15,5 +15,8 @@ public class Practice {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        char a = 'a';
+        
+        String s = String.valueOf(a);
     }
 }

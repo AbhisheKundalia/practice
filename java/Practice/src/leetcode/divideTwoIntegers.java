@@ -13,21 +13,24 @@ public class divideTwoIntegers {
     //simple but need to adjust the final result
     
     public int divide(int dividend, int divisor) {
-        if(dividend == 0) return 0;
+        if(dividend == 0 || divisor == 1) return dividend;
         
-        int sign1 = 1;
-        int sign2 = 1;
+        int sign = 1;
         
-        if(dividend < 0) sign1 = -1;
-        if(divisor < 0) sign2 = -1;
+        if(dividend < 0) sign *= -1;
+        if(divisor < 0) sign *= -1;
         
+         if(dividend==Integer.MAX_VALUE&&divisor==Integer.MIN_VALUE) return 0;
+         else if(dividend==Integer.MIN_VALUE&&divisor==Integer.MAX_VALUE) return sign < 0? -1:1;
+    
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
         
         double t = Math.log10(dividend) - Math.log10(divisor);
-        int result = (int)Math.pow(10, t);
+        double ret = Math.pow(10, t);
+        int result = (int) Math.floor(ret+ 0.0000001);
         
-        return sign1*sign2*result;
+        return sign*result;
     }
     
     
@@ -62,5 +65,6 @@ public class divideTwoIntegers {
         
     }
     
+   
     
 }

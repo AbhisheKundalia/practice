@@ -47,4 +47,27 @@ public class AddBinary {
         
         return result;
     }
+    
+    //updated on July-25   
+     public String addBinary2(String a, String b) {
+          String res = "";
+          int aLen = a.length();
+          int bLen = b.length();
+          int add = 0, add1= 0, add2 = 0;
+          
+          int i = 1;
+          
+          while(i <= aLen || i <= bLen || add > 0){
+       
+             add1 = i <= aLen ? a.charAt(aLen - i) - '0' : 0;
+             add2 = i <= bLen ? b.charAt(bLen - i) - '0' : 0;
+              
+             res = (add1+add2+add)%2 + res;
+             add = (add1 + add2 + add)/2;
+              i++;
+          }
+          
+          return res;
+    }
+    
 }

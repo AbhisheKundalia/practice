@@ -12,21 +12,20 @@ import java.util.*;
 public class anagrams {
     public List<String> anagrams(String[] strs) {
        List<String> res = new ArrayList<String> ();
-       HashMap<String, String> temp = new HashMap<String, String>();
-       
-       for(int i = 0; i < strs.length; i++){
+       HashMap<String, Integer> tmp = new HashMap<String, Integer>();
+
+       for(int i = 0; i < strs.length; i++){     
            String key = getKey(strs[i]);
            
-           if(temp.containsKey(key)){
-               String value = temp.get(key);
-               
-                if(!res.contains(value)){
-                   res.add(value);
+           if(tmp.containsKey(key)){
+                if(tmp.get(key) != -1){
+                   res.add(strs[tmp.get(key)]);
+                   tmp.put(key, -1);
                }
                res.add(strs[i]);
               
            }else{
-               temp.put(key, strs[i]);
+               tmp.put(key, i);
            }
        }
        
@@ -34,20 +33,48 @@ public class anagrams {
     }
     
     public String getKey(String str){
-        int[] temp = new int[26];
+        int[] count = new int[26];
         String res = "";
         
         for(int i = 0; i < str.length(); i++){
-            temp[str.charAt(i) - 'a'] += 1;
+            count[str.charAt(i) - 'a']++;
         }
         
         for(int i = 0; i < 26; i++){
-            if(temp[i] > 0){
-                res += temp[i];
-                res += String.valueOf(Character.toChars(i+'a'));
+            if(count[i] > 0){
+                res += count[i] + String.valueOf(Character.toChars(i+'a')) ;
             }
         }
         
         return res;
     }
+    
+    public List<String> anagrams2(String[] strs) {
+       List<String> res = new ArrayList<String> ();
+       HashMap<String, Integer> temp = new HashMap<String, Integer>();
+
+       for(int i = 0; i < strs.length; i++){
+          
+          char[] tmp0 = strs[i].toCharArray();
+          Arrays.sort(tmp0);
+          
+           String key = String.valueOf(tmp0);
+           
+           if(temp.containsKey(key)){
+              
+               
+                if(temp.get(key) != -1){
+                   res.add(strs[temp.get(key)]);
+                   temp.put(key, -1);
+               }
+               res.add(strs[i]);
+              
+           }else{
+               temp.put(key, i);
+           }
+       }
+       
+       return res;
+    }
+    
 }
