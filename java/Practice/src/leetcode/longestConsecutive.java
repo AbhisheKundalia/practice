@@ -4,7 +4,8 @@
  */
 package leetcode;
 
-import java.util.Arrays;
+import java.util.*;
+
 
 /**
  *
@@ -19,6 +20,7 @@ public class longestConsecutive {
         for(int i = 0; i < num.length - 1; i++){
             if(num[i] == num[i+1] - 1){
                 len++;
+                i++;
             }else if(num[i] < num[i+1] - 1){
                 max = len > max? len : max;
                 len = 1;
@@ -27,5 +29,37 @@ public class longestConsecutive {
         
         max = max > len ? max : len;
         return max;
+    }
+    
+     public int longestConsecutive2(int[] num) {
+       HashMap<Integer, Boolean> tmp = new HashMap<Integer, Boolean>();
+       int maxLen = 0;
+       
+       for(int i = 0; i < num.length; i++){
+           tmp.put(num[i], true);
+       }
+       
+       for(int i = 0; i < num.length; i++){
+           int len = 0;
+           int num0 = num[i];
+           
+           while(tmp.containsKey(num0) && tmp.get(num0)){
+               len++;
+               tmp.put(num0, false);
+               num0++;
+           }
+           
+           num0 = num[i]-1;
+     
+            while(tmp.containsKey(num0) && tmp.get(num0)){
+               len++;
+               tmp.put(num0, false);
+               num0--;
+           }
+           
+           maxLen = Math.max(len, maxLen);
+       }
+       
+       return maxLen;
     }
 }

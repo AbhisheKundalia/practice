@@ -73,20 +73,19 @@ public class mergeInterval {
             s++;
         }
         
-        if( s > 0 && newInterval.start <= intervals.get(s-1).end){
+        if(s > 0 && newInterval.start <= intervals.get(s-1).end){
             s--;
         }else{
-            res.add( s, newInterval);
+            res.add(s, newInterval);
         }
         
+        res.get(s).end = Math.max(newInterval.end, res.get(s).end);
         s++;
               
        while( s < res.size() && newInterval.end >= res.get(s).start){
            newInterval.end = Math.max(newInterval.end, res.get(s).end);
            res.remove(s);
        }
-
-       res.get(s-1).end = Math.max(newInterval.end, res.get(s-1).end);
         
         return res;
     }
