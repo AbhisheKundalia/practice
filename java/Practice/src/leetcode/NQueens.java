@@ -17,52 +17,54 @@ import java.util.*;
  */
 public class NQueens {
     public List<String[]> solveNQueens(int n) {
-        boolean[] visited = new boolean[n];
-        int level = 0;
-        int prePos = n+1;
-        List<String[]> res = new ArrayList<String[]>();
-        String[] prevRes = new String[n];
-        
-        solveNQueens0(level, visited, prePos, prevRes, res);
-        
+        List<String []> res = new ArrayList<String []>();
+        int[] solution = new int[n];
+    
+        String[] curr = new String[n];
+        Nqueen1(1, solution, curr, res);
         return res;
     }
     
-    public void solveNQueens0(int level, boolean[] visited, int prePos,String[] prevRes, List<String[]> res){
-         int n = visited.length;
-         char[] s = new char[n];
-           
-         for(int j = 0; j < n; j++) s[j] = '.';
-           
-         for(int i = 0; i < n; i++){
-               if(!visited[i] && Math.abs(prePos - i) > 1){
-                   visited[i] = true;
-                   s[i] = 'Q';
-                   String t = String.copyValueOf(s);                  
-                   prevRes[level] = t;
+    public void Nqueen1(int level, int[] solution, String[] curr, List<String []> res){
+        
+        if(level == solution.length + 1){
+            res.add(Arrays.copyOf(curr, level-1));
+            return;
+        }
+        
+        for(int i = 1; i <= solution.length; i++){
+            int slop0 = Math.abs(i - level);
+            
+                int j = 0; 
+                while(j < level && solution[j] != i && Math.abs(j - level) != Math.abs(solution[j] - i)){
+                    j++;
+                }
+                
+                if(j == level){
+                    String tmp = "";
+                    
+                    for(int t = 1; t <= solution.length; t++){
+                        if(t==i) tmp += "Q";
+                        else tmp += ".";
+                    }
+                    
                    
-                   if(level+1 == n) {
-                       res.add(prevRes);
-                   }else{
-                      solveNQueens0(level+1, visited, i, prevRes, res);
-                   }
-                   s[i] = '.';
-                   visited[i]=false;
-                  
-               }     
-           }
+                    solution[level-1] = i;
+                    curr[level-1] = tmp;
+                    Nqueen1(level + 1, solution, curr, res);
+                    solution[level - 1] = 0;
+                    curr[level - 1] = ""; 
+                }
+         }
     }
     
+    
     public int totalNQueens(int n) {
-           int total = 0;
+
+        ArrayList<Integer> solution = new ArrayList<Integer> ();
            
-           for(int i = 0; i < n; i++){
-               ArrayList<Integer> tmp = new ArrayList<Integer>();
-               tmp.add(i);
-               total += totalNq(tmp, 1, n);
-           }
-           
-           return total;      
+        return totalNq(solution, 0, n);
+               
     }
     
     public int totalNq(ArrayList<Integer> orders, int level, int n){
@@ -89,4 +91,6 @@ public class NQueens {
            
            return total;
     }
+    
+    
 }

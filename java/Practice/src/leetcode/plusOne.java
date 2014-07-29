@@ -20,18 +20,19 @@ public class plusOne {
         int len = digits.length;
         
         for(int i = len - 1; add > 0 && i >= 0; i--){
-            int num = digits[i] + add;
-            add = num/10;
-            digits[i] = num%10;
+            digits[i] = (digits[i] + add)%10;
+            add = (digits[i] + add)/10;
         }
         
         if( add > 0 ){
-            int[] result0 = new int[len + 1];
-            result0[0] = add;
+            
+            int[] result = new int[len + 1];
+            result[0] = add;
+            
             for(int i = 1; i <= len; i++){
-                result0[i] = digits[i-1];
+                result[i] = digits[i-1];
             }
-            return result0;
+            return result;
         }
        
         return digits;
