@@ -46,7 +46,7 @@ public class divideTwoIntegers {
         int i = 0;
         
         while(dvd >= dvs){
-            dvs <<=1;
+            dvs <<= 1;
             i++;
         }
        

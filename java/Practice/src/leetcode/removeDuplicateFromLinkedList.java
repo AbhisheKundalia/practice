@@ -11,58 +11,53 @@ import java.util.*;
  * @author admin
  */
 public class removeDuplicateFromLinkedList {
-      public ListNode deleteDuplicates(ListNode head) {
-        ListNode begin = head;
-        ListNode p = head;
+     public ListNode deleteDuplicates(ListNode head) {
+         if(head == null) return head;
         
-        if(head == null) return head;
-        
-        while(p.next != null){
-            if(p.next.val != p.val){
-                if(p != begin){
-                   begin.next = p.next;    
-                }else{
-                
-                 begin = begin.next;
-                }
-                
-                p = begin;
+         ListNode prev = head;
+         ListNode p = prev.next;
+         
+        while(p != null){
+            if(p.val != prev.val){
+                prev = p;
+                p = p.next;
             }else{
                 p = p.next;
+                prev.next = p;
             }
-        }
-        
-        //need to consider the rest
-        if(begin != p){
-            begin.next = null;
         }
         
         return head;
-        
     }
+     
       public ListNode deleteDuplicates2(ListNode head) {
-        ListNode safeHead = new ListNode(0);
-        safeHead.next = head;
-        ListNode p = head;
-        ListNode begin = safeHead;
+         if(head == null) return head;
         
-       if(head == null) return head;
-        
-        
-        while(p.next != null){
-            if(p.next.val != p.val){
-                
-                if(begin.next != p){
-                    begin.next = p.next;
+         ListNode safeHead = new ListNode(0);
+         safeHead.next = head;
+         ListNode prev0 = safeHead;
+         
+         ListNode prev = head;
+         ListNode p = prev.next;
+         
+        while(p != null){
+            if(p.val != prev.val){
+                if(prev0.next != prev){
+                    prev0.next = p;
+                }else{
+                    prev0 = prev;
                 }
-                p = p.next;
                 
+                prev = p;
+                p = p.next;
             }else{
+                prev = p;
                 p = p.next;
             }
         }
-        if(begin.next != p){
-            begin.next = null;
+        
+        if(prev0.next != prev){
+            prev0.next = prev.next;
         }
         
         return safeHead.next;

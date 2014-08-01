@@ -11,44 +11,31 @@ package leetcode;
 public class reverseLinkedList {
 
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        ListNode safeHead = new ListNode(0);
-        safeHead.next = head;
-
-        ListNode prev = safeHead;
         ListNode p = head;
-        ListNode begin = prev;
-
-        int count = 0;
-
-        while (p != null && count < n) {
-            count++;
-
-            if (count == m) {
-                begin = prev;
-                prev = p;
-                p = p.next;
-                prev.next = null;
-            } else if (count > m) {
-                ListNode tmp = p;
-                p = p.next;
-                tmp.next = prev;
-                prev = tmp;
-            } else {
-                prev = p;
-                p = p.next;
+        ListNode safehead = new ListNode(0);
+        safehead.next = head;
+        ListNode prevM = safehead;
+        ListNode prev = null;
+         
+        int i = 1;
+        
+        while( p != null && i <= n){
+            if(i >= m){
+               ListNode tmp = p;
+               p = p.next;
+               tmp.next = prev;
+               prev = tmp;
+            }else{
+              prevM = prevM.next;
+              p = p.next;
             }
-
-            if (count == n) {
-                begin.next.next = p;
-                begin.next = prev;
-            }
+            i++;
         }
-
-        if (count < n && count > m) {
-            begin.next = prev;
-        }
-
-        return safeHead.next;
+       
+        prevM.next.next = p;
+        prevM.next = prev;
+        
+        return safehead.next;
     }
 
     public ListNode reverseKGroup(ListNode head, int k) {

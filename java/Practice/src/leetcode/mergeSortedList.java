@@ -69,4 +69,8 @@ public class mergeSortedList {
 
         return lists.get(0);
     }
+    
+      public ListNode mergeKLists2(List<ListNode> lists) {
+          
+      }
 }

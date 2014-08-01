@@ -12,16 +12,13 @@ public class removeElement {
     public int removeElement(int[] A, int elem) {
         int num = 0;
         
-        for(int i = 0; i < A.length - num; i++){
+        for(int i = 0; i < A.length; i++){
             if(A[i] == elem){
-                while(num <= A.length - 1 && A[A.length - 1 - num] == elem) num++;
-                
-                if( i  <  A.length - 1 - num)
-                {
-                    A[i] = A[A.length - 1 - num];
-                    num++;
-                }
+                num++;
+                continue;
             }
+            
+            A[i-num] = A[i];
         }
         
         return A.length - num;
