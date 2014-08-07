@@ -43,4 +43,40 @@ public class sumRootToLeafNumbers {
         
         return total;
     }
+    
+    //this problem is printing out all leves
+     public int sumNumbers2(TreeNode root) {
+         int total = 0;
+         if(root == null) return total;
+         
+         Queue<TreeNode> tmp = new LinkedList<TreeNode>();
+         Queue<Integer> num = new LinkedList<Integer>();
+         tmp.add(root);
+         num.add(root.val);
+         
+         while(!tmp.isEmpty()){
+             int size = tmp.size();
+             
+             for(int i = 0; i < size; i++){
+                 TreeNode p = tmp.poll();
+                 int num0 = num.poll();
+                 
+                 if(p.left != null){
+                     tmp.add(p.left);
+                     num.add(num0*10 + p.left.val);
+                 }
+                 
+                 if(p.right != null){
+                     tmp.add(p.right);
+                     num.add(num0*10 + p.right.val);
+                 }
+                 
+                 if(p.right == null && p.left == null){
+                     total += num0;
+                 }
+             }
+         }
+         
+         return total;
+    }
 }

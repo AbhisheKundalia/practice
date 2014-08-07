@@ -12,63 +12,51 @@ import java.util.*;
  */
 public class textJustification {
      public List<String> fullJustify(String[] words, int L) {
-        int startIndex = 0, i = 0;
-        int len = words.length;
-        List<String> res = new ArrayList<String>();
+       List<String> res = new ArrayList<String>();
+        if(words.length < 1 || words[0].length() > L) return res;
         
-        while(i < len){
-            startIndex = i;
-            String s = words[i];
-            int currLen = words[i].length();
-            int spaceNum = 0;
-            int next = i+1;
-            
-            while(currLen <= L && next < len){
-                 currLen += words[next].length() + 1;
-                 next++;
-            }
-            
-            if(L < currLen) {
-                currLen -= (words[next-1].length()+1);
-                next--;
-            }
-            
-             next--;
-            
-            if( next ==  startIndex || next == len - 1) {
+        int start = 0;
+        int num = 0;
+        
+        for(int i = 0; i < words.length; i++){
+            if( (num + words[i].length() + (i-start) > L)){
+                String str = "";
                 
-                if(next == len - 1){
-                  for(int j = startIndex + 1; j <= next; j++)
-                        s += " " + words[j];
-                     }
-                  
-                spaceNum = L-currLen;
-                for(int t = 0; t < spaceNum; t++){
-                    s += " ";
+                for(int j = start; j < i-1; j++){
+                    str += words[j];
+                    
+                    int spaceNum = (L - num)/(i-start-1);
+                    
+                    int t = 0;
+                    while(t < spaceNum){
+                        str += " ";
+                        t++;
+                    }
+                    
+                    if(j < (L-num)%(i-start-1) + start){
+                        str += " ";
+                    }
                 }
                 
-                res.add(s);
-                
-            }else{           
-             spaceNum = 1 + (L - currLen)/(next - startIndex);
-             
-             for(int t = 0; t < next - startIndex; t++){
-                 for(int k = 0; k < spaceNum; k++){
-                    s+=" "; 
-                 }
-                 
-                 if(t < (L - currLen)%(next - startIndex)){
-                     s += " ";
-                 }
-                 
-                 s+= words[startIndex + t + 1];
-             }
-             
-             res.add(s);
+                str += words[i-1];
+                  
+                while(str.length() < L) str += " ";
+                res.add(str);
+                start = i;
+                num = words[i].length();
+            }else{
+                num += words[i].length();
             }
-            
-            i = next + 1;
         }
+    
+        //the last piece
+        String str = words[start];
+        for(int j = start + 1; j < words.length; j++){
+             str += " " + words[j];
+        }
+        
+        while(str.length() < L) str += " ";
+        res.add(str);
         
         return res;
     }
