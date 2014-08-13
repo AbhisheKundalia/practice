@@ -84,18 +84,18 @@ public class surroundedRegions {
          for(int i = 1; i < row - 1; i++){
             if(board[i][col-1] == 'O'){
                 index.add(i);
-                index.add(col-1);
+                indexy.add(col-1);
             } 
             if(board[i][0] == 'O'){
                 index.add(i);
-                index.add(0);
+                indexy.add(0);
             }
         }
         
          
          while(!index.isEmpty()){
              int x = index.poll();
-             int y = index.poll();
+             int y = indexy.poll();
              board[x][y] = 'Y';
              
              if(x>=1 && board[x-1][y] == 'O'){

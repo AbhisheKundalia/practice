@@ -107,4 +107,70 @@ public class bestTimeBuyandSell {
         
         return maxProfit;
     }
+    
+    public int maxProfitwithOnTrans(int[] prices) {
+        int maxProfit = 0;
+        int lowestPrice = Integer.MAX_VALUE;
+        
+        for(int i = 0; i < prices.length; i++){   
+            lowestPrice = lowestPrice < prices[i]? lowestPrice : prices[i];
+            int profit = prices[i] - lowestPrice;
+            maxProfit = maxProfit > profit ? maxProfit : profit;
+        }
+        
+        
+        return maxProfit;
+    }
+    
+     public int maxProfitwithTwoTrans(int[] prices) {
+        int maxProfit = 0;
+        int[] leftMaxProfit = new int[prices.length];
+        int[] rightMaxProfit = new int[prices.length];
+        
+        int minPrice = Integer.MAX_VALUE;
+        
+        //scan from the bgining to the end, get the leftMaxProfit for each index i
+        // keep track min price in left
+        for(int i = 0; i < prices.length; i++){   
+            minPrice = minPrice < prices[i]? minPrice : prices[i];
+            int profit = prices[i] - minPrice;
+            leftMaxProfit[i] = maxProfit > profit ? maxProfit : profit;
+        }
+        
+        int maxPrice = 0;
+        maxProfit = 0;
+        
+        //scan from the end to the begining, and get the rightMaxProfit for each index i
+        // Keep Track the max price in right
+        for(int i = prices.length; i > 0; i--){
+            int profit = maxPrice - prices[i-1];
+            maxProfit = maxProfit > profit ? maxProfit : profit;
+            rightMaxProfit[i-1] = maxProfit;
+            maxPrice = maxPrice > prices[i-1]? maxPrice : prices[i-1];
+        }
+        
+        maxProfit = 0;
+        
+        //scan from the beginning to the end, calculate the maxprofit at each i
+        // keep the track the maxprofit 
+        for(int i = 0; i < prices.length; i++){
+           int profit = leftMaxProfit[i] + rightMaxProfit[i];
+           maxProfit = profit > maxProfit? profit : maxProfit;
+        }
+        
+        return maxProfit;
+    }
+     
+     //add all positive profit together
+      public int maxProfitwithManyTrans(int[] prices) {
+        int profit = 0;
+        
+        for(int i = 1; i < prices.length; i++){
+            int diff = prices[i] - prices[i-1];
+            profit += diff > 0 ? diff : 0;
+        }
+        
+        return profit;
+    }
+    
 }
