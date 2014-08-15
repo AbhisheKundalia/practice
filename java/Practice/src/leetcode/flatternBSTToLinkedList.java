@@ -34,4 +34,27 @@ public class flatternBSTToLinkedList {
             p = p.right;
         }
     }
+     
+      public void flatten2(TreeNode root) {
+        TreeNode p = root;
+        Stack<TreeNode> tmp = new Stack<TreeNode>();
+        
+        while(p != null){ 
+            
+         if(p.right != null && p.left != null){
+             tmp.add(p.right);
+         }
+         
+         if(p.left != null){
+             p.right = p.left;
+             p.left = null;
+         }
+         
+         if(p.right == null && !tmp.isEmpty()){
+             p.right = tmp.pop();
+         }
+         
+         p = p.right;
+        }
+    }
 }
